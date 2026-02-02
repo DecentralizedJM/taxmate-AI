@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env
+.env.*
+*.log
+.DS_Store
+
+# frontend
+frontend/node_modules/
+frontend/dist/
+
+# cloned repo (separate GitHub repo - do not track)
+taxmate-AI1-frontend/

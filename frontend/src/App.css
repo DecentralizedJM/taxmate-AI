@@ -1,0 +1,144 @@
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+header p {
+  color: var(--color-muted);
+  margin: 0.25rem 0 0;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+  font-size: 1.15rem;
+  margin: 0 0 1rem;
+}
+
+.card h3 {
+  font-size: 1rem;
+  margin: 1rem 0 0.5rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem 1rem;
+  align-items: center;
+}
+
+.form-grid label {
+  font-size: 0.9rem;
+}
+
+.form-grid input {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.form-grid input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+button.primary {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.primary:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+button.primary:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.recommendation {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: var(--highlight);
+  border-radius: 8px;
+}
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.regime-block {
+  padding: 0.75rem;
+  background: var(--bg);
+  border-radius: 8px;
+}
+
+.regime-block h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.regime-block ul {
+  margin: 0;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.slab-details {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.slab-details summary {
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.slab-details ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+  line-height: 1.5;
+}
+
+.error {
+  color: var(--error);
+  margin: 0 0 1rem;
+  padding: 0.75rem;
+  background: rgba(220, 53, 69, 0.1);
+  border-radius: 8px;
+}
+
+@media (max-width: 560px) {
+  .form-grid,
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+}

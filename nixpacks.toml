@@ -1,0 +1,15 @@
+# Nixpacks config (Railway default builder when no Dockerfile)
+# Ensures Node 20 and correct install/build order
+# https://nixpacks.com/docs
+
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.install]
+cmds = ["npm ci", "cd frontend && npm ci"]
+
+[phases.build]
+cmds = ["npm run build", "cd frontend && npm run build"]
+
+[start]
+cmd = "npm start"

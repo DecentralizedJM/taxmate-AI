@@ -4,6 +4,9 @@
  * All amounts in INR (₹)
  */
 
+// Re-export agent types
+export * from './agent';
+
 /** Tax regime: New (default from Budget 2023) or Old */
 export type TaxRegime = 'new' | 'old';
 

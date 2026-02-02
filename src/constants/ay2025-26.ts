@@ -57,3 +57,17 @@ export const SECTION_44AD_RATE_CASH = 0.06;    // 6%
 
 /** Section 44ADA - Presumptive profession - 50% of gross receipts */
 export const SECTION_44ADA_RATE = 0.50; // 50%
+
+// --- Deduction caps (statutory limits) ---
+/** Section 80C, 80CCC, 80CCD(1) combined max */
+export const SECTION_80C_MAX = 1_50_000; // ₹1,50,000
+/** Section 80CCD(1B) - NPS additional contribution max */
+export const SECTION_80CCD1B_MAX = 50_000; // ₹50,000
+/** Section 80D - Health insurance max (self + family, non-senior) */
+export const SECTION_80D_MAX = 25_000; // ₹25,000 (can be higher with parents/seniors)
+/** Section 80TTA - Interest on savings max */
+export const SECTION_80TTA_MAX = 10_000; // ₹10,000
+
+// --- Sanity limits ---
+/** Maximum gross income accepted (10 Crore) - protects against overflow/input errors */
+export const MAX_GROSS_INCOME = 10_00_00_000; // ₹10 Crore

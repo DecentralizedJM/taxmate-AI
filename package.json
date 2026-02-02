@@ -6,9 +6,15 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
+    "start": "node dist/server/index.js",
+    "start:server": "node dist/server/index.js",
     "dev": "ts-node src/example.ts",
-    "test": "ts-node src/__tests__/engine.test.ts"
+    "dev:server": "NODE_ENV=development ts-node src/server/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "ingest": "ts-node src/rag/ingest.ts"
   },
   "keywords": [
     "income-tax",
@@ -18,10 +24,25 @@
   ],
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "@qdrant/js-client-rest": "^1.12.0",
+    "@supabase/supabase-js": "^2.45.0",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0",
+    "express-rate-limit": "^7.4.0",
+    "pino": "^9.4.0",
+    "pino-http": "^10.3.0",
+    "zod": "^3.23.0"
+  },
   "devDependencies": {
+    "@types/express": "^5.0.0",
     "@types/node": "^20.10.0",
+    "@vitest/coverage-v8": "^2.1.0",
+    "pino-pretty": "^11.2.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.0"
+    "typescript": "^5.3.0",
+    "vitest": "^2.1.0"
   },
   "engines": {
     "node": ">=18"

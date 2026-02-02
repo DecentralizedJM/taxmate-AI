@@ -15,6 +15,9 @@ export { calculateTax } from './engine/TaxCalculationEngine';
 // API layer (use for HTTP/CLI - validates input)
 export { calculateTaxApi, ZERO_INCOME_HEADS, type CalculateTaxRequest } from './api/taxApi';
 
+// Errors
+export { ValidationError, type ValidationErrorCode } from './errors';
+
 // Types
 export type {
   TaxRegime,
@@ -47,4 +50,9 @@ export {
   SECTION_44AD_RATE_CASH,
   SECTION_44ADA_RATE,
   HEALTH_EDUCATION_CESS_RATE,
+  SECTION_80C_MAX,
+  SECTION_80CCD1B_MAX,
+  SECTION_80D_MAX,
+  SECTION_80TTA_MAX,
+  MAX_GROSS_INCOME,
 } from './constants/ay2025-26';

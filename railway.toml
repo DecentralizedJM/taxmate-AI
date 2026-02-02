@@ -1,0 +1,11 @@
+# TaxMate AI - Railway deployment config
+# https://docs.railway.app/reference/config-as-code
+# Set health check in Railway Dashboard: Settings → Health Check Path = /health
+
+[build]
+# Build backend + frontend (Nixpacks)
+buildCommand = "npm ci && npm run build && cd frontend && npm ci && npm run build"
+
+[deploy]
+# PORT is set by Railway
+startCommand = "npm start"

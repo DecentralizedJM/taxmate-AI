@@ -1,0 +1,280 @@
+openapi: 3.0.3
+info:
+  title: TaxMate AI API
+  description: |
+    Indian Income Tax Calculation API for Assessment Year 2025-26 (FY 2024-25).
+    Computes tax under both New and Old regimes with Budget 2024 amendments.
+  version: 1.0.0
+  contact:
+    name: TaxMate AI
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Returns server status for load balancer/container health checks.
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /api/calculate:
+    post:
+      summary: Calculate income tax
+      description: |
+        Calculates tax for both New and Old regimes and returns a recommendation.
+        Rate limited to 100 requests per 15 minutes per IP.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalculateTaxRequest'
+      responses:
+        '200':
+          description: Tax calculation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaxCalculationOutput'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    IncomeHeads:
+      type: object
+      required:
+        - salary
+        - houseProperty
+        - business
+        - capitalGainsOther
+        - otherSources
+        - vda
+        - stcgListedEquity
+        - ltcgListedEquity
+      properties:
+        salary:
+          type: number
+          minimum: 0
+          description: Salary income (Section 17) before standard deduction
+          example: 1200000
+        houseProperty:
+          type: number
+          minimum: 0
+          description: Income from house property (Section 22-27)
+          example: 0
+        business:
+          type: number
+          minimum: 0
+          description: Business/profession income (Section 28-44)
+          example: 0
+        capitalGainsOther:
+          type: number
+          minimum: 0
+          description: Capital gains excluding VDA, STCG, LTCG on listed equity
+          example: 0
+        otherSources:
+          type: number
+          minimum: 0
+          description: Income from other sources (Section 56-59)
+          example: 50000
+        vda:
+          type: number
+          minimum: 0
+          description: Virtual Digital Assets (Crypto) gains - Section 115BBH
+          example: 0
+        stcgListedEquity:
+          type: number
+          minimum: 0
+          description: STCG on listed equity - Section 111A
+          example: 0
+        ltcgListedEquity:
+          type: number
+          minimum: 0
+          description: LTCG on listed equity - Section 112A
+          example: 0
+
+    PresumptiveBusiness:
+      type: object
+      properties:
+        section44AD:
+          type: object
+          properties:
+            turnover:
+              type: number
+              minimum: 0
+              description: Total turnover for Section 44AD
+            isDigitalReceipts:
+              type: boolean
+              description: true = 8% (digital), false = 6% (cash)
+        section44ADA:
+          type: object
+          properties:
+            grossReceipts:
+              type: number
+              minimum: 0
+              description: Gross receipts for Section 44ADA (50%)
+
+    DeductionsInput:
+      type: object
+      properties:
+        section80C:
+          type: number
+          minimum: 0
+          maximum: 150000
+          description: 80C, 80CCC, 80CCD(1) combined - max ₹1,50,000
+        section80CCD1B:
+          type: number
+          minimum: 0
+          maximum: 50000
+          description: 80CCD(1B) NPS additional - max ₹50,000
+        section80CCD2:
+          type: number
+          minimum: 0
+          description: 80CCD(2) Employer NPS
+        section80D:
+          type: number
+          minimum: 0
+          maximum: 25000
+          description: 80D Health insurance - max ₹25,000 (self+family non-senior)
+        section80E:
+          type: number
+          minimum: 0
+          description: 80E Education loan interest
+        section80G:
+          type: number
+          minimum: 0
+          description: 80G Donations
+        section80TTA:
+          type: number
+          minimum: 0
+          maximum: 10000
+          description: 80TTA Interest on savings - max ₹10,000
+        other:
+          type: number
+          minimum: 0
+          description: Other Chapter VI-A deductions
+
+    CalculateTaxRequest:
+      type: object
+      required:
+        - incomeHeads
+      properties:
+        incomeHeads:
+          $ref: '#/components/schemas/IncomeHeads'
+        presumptiveBusiness:
+          $ref: '#/components/schemas/PresumptiveBusiness'
+        deductions:
+          $ref: '#/components/schemas/DeductionsInput'
+        assesseeType:
+          type: string
+          enum: [individual, huf]
+          default: individual
+
+    RegimeResult:
+      type: object
+      properties:
+        regime:
+          type: string
+          enum: [new, old]
+        grossIncome:
+          type: number
+        standardDeduction:
+          type: number
+        chapter6ADeductions:
+          type: number
+        totalIncome:
+          type: number
+        taxOnSlabs:
+          type: number
+        slabBreakdown:
+          type: array
+          items:
+            type: object
+        rebate87A:
+          type: number
+        taxAfterRebate:
+          type: number
+        specialTax:
+          type: number
+        specialTaxBreakdown:
+          type: object
+        totalTaxBeforeCess:
+          type: number
+        healthEducationCess:
+          type: number
+        totalTaxLiability:
+          type: number
+
+    TaxCalculationOutput:
+      type: object
+      properties:
+        assessmentYear:
+          type: string
+          example: "2025-26"
+        financialYear:
+          type: string
+          example: "2024-25"
+        assesseeType:
+          type: string
+          enum: [individual, huf]
+        incomeHeads:
+          $ref: '#/components/schemas/IncomeHeads'
+        presumptiveBusiness:
+          $ref: '#/components/schemas/PresumptiveBusiness'
+        newRegime:
+          $ref: '#/components/schemas/RegimeResult'
+        oldRegime:
+          $ref: '#/components/schemas/RegimeResult'
+        recommendedRegime:
+          type: string
+          enum: [new, old]
+        taxDifference:
+          type: number
+          description: Old regime tax minus New regime tax (positive = new is better)
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: INVALID_INCOME_HEAD
+            message:
+              type: string
+              example: Invalid income head "salary" must be a non-negative finite number
+            field:
+              type: string
+              example: salary

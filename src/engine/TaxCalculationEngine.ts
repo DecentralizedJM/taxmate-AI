@@ -247,8 +247,9 @@ export function calculateTax(params: {
   const stdOld = Math.min(salary, STANDARD_DEDUCTION_OLD_REGIME);
 
   // New regime: no Chapter VI-A
-  const totalIncomeNew = grossIncome - stdNew - 0;
-  const totalIncomeOld = grossIncome - stdOld - chapter6A;
+  // Per IT practice, negative total income is treated as zero (e.g. when deductions exceed gross)
+  const totalIncomeNew = Math.max(0, grossIncome - stdNew);
+  const totalIncomeOld = Math.max(0, grossIncome - stdOld - chapter6A);
 
   const specialResult = computeSpecialTax(incomeHeads);
 

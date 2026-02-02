@@ -1,3 +1,62 @@
+/* App Wrapper */
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mode Selector */
+.mode-selector {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-secondary, #f9fafb);
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.mode-selector button {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 0.5rem;
+  background: var(--bg-primary, #fff);
+  color: var(--text-secondary, #6b7280);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.mode-selector button:hover {
+  background: var(--bg-hover, #f3f4f6);
+}
+
+.mode-selector button.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  .mode-selector {
+    background: #1f2937;
+  }
+  
+  .mode-selector button {
+    background: #111827;
+    color: #9ca3af;
+    border-color: #374151;
+  }
+  
+  .mode-selector button:hover {
+    background: #374151;
+  }
+}
+
+/* Calculator Styles */
 .app {
   max-width: 720px;
   margin: 0 auto;
@@ -134,6 +193,66 @@ button.primary:disabled {
   padding: 0.75rem;
   background: rgba(220, 53, 69, 0.1);
   border-radius: 8px;
+}
+
+/* Error boundary */
+.error-boundary {
+  max-width: 500px;
+  margin: 4rem auto;
+  padding: 2rem;
+  text-align: center;
+  background: var(--card-bg);
+  border-radius: 12px;
+}
+
+.error-boundary h1 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+}
+
+.error-boundary p {
+  color: var(--color-muted);
+  margin-bottom: 1.5rem;
+}
+
+.error-boundary details {
+  text-align: left;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+}
+
+.error-boundary pre {
+  background: var(--bg);
+  padding: 0.75rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+/* Focus styles for accessibility */
+.form-grid input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.result-card:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.disclaimer {
+  margin-top: 2rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  background: var(--bg);
+  border-radius: 8px;
+  line-height: 1.4;
 }
 
 @media (max-width: 560px) {

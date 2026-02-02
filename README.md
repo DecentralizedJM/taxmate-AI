@@ -228,8 +228,7 @@ taxmate-AI/
 │   ├── ASSUMPTIONS.md
 │   ├── DEPLOYMENT.md          # Railway + Qdrant
 │   ├── RUNBOOK.md
-│   ├── openapi.yaml
-│   └── PRODUCTION_READINESS.md
+│   └── openapi.yaml
 ├── .env.example
 ├── Dockerfile                 # Multi-stage: backend + frontend → single image
 ├── docker-compose.yml         # app + qdrant
@@ -252,7 +251,7 @@ taxmate-AI/
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/your-org/taxmate-AI.git
+git clone https://github.com/DecentralizedJM/taxmate-AI.git
 cd taxmate-AI
 npm install
 ```
@@ -447,7 +446,6 @@ docker-compose up -d
 | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Railway + Qdrant deployment, env vars, ingest, health, troubleshooting. |
 | [docs/RUNBOOK.md](docs/RUNBOOK.md) | Operations: run, deploy, API, troubleshooting. |
 | [docs/openapi.yaml](docs/openapi.yaml) | OpenAPI 3.0 specification for HTTP API. |
-| [docs/PRODUCTION_READINESS.md](docs/PRODUCTION_READINESS.md) | Production readiness assessment. |
 
 ---
 

@@ -60,18 +60,6 @@ npm run build    # output in frontend/dist
 
 ---
 
-## CI Without Hosted Runners (Billing Locked)
-
-If GitHub-hosted runners are blocked, add a **self-hosted runner** and point CI to it:
-
-1) Repo → Settings → Actions → Runners → New self-hosted runner (Linux x64).  
-2) Follow GitHub’s instructions (`config.sh` with repo URL/token, then `./run.sh`).  
-3) In `.github/workflows/ci.yml`, set `runs-on: [self-hosted, linux, x64]` for the jobs you want to run.
-
-Details: [docs/SELF_HOSTED_RUNNER.md](SELF_HOSTED_RUNNER.md)
-
----
-
 ## API Endpoints
 
 | Method | Path | Description |
